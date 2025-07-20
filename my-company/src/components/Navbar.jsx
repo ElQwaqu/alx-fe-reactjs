@@ -5,7 +5,8 @@ function Navbar() {
         backgroundColor: '#333',
         padding: '1rem',
         display: 'flex',
-        gap: '1rem'
+        gap: '1rem',
+        justifyContent: 'center'
     };
 
     const linkStyle = {
