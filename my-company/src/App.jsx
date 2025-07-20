@@ -5,17 +5,12 @@ import Home from './components/Home';
 import About from './components/About';
 import Services from './components/Services';
 import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 function App() {
-  const appStyle = {
-    fontFamily: 'Arial, sans-serif',
-    minHeight: '100vh',
-    backgroundColor: '#f8f9fa'
-  };
-
   return (
     <Router>
-      <div style={appStyle}>
+      <div className="App" style={{ paddingBottom: '60px' }}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -23,6 +18,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
