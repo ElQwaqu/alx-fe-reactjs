@@ -12,7 +12,21 @@ const RecipeDetails = () => {
     const recipe = useRecipeStore(state =>
         state.recipes.find(recipe => recipe.id === recipeId)
     );
+    const favorites = useRecipeStore(state => state.favorites);
+    const addFavorite = useRecipeStore(state => state.addFavorite);
+    const removeFavorite = useRecipeStore(state => state.removeFavorite);
+
     const [isEditing, setIsEditing] = useState(false);
+
+    const isInFavorites = favorites.includes(recipeId);
+
+    const handleToggleFavorite = () => {
+        if (isInFavorites) {
+            removeFavorite(recipeId);
+        } else {
+            addFavorite(recipeId);
+        }
+    };
 
     const handleBackToList = () => {
         navigate('/');
@@ -99,6 +113,41 @@ const RecipeDetails = () => {
                     borderTop: '1px solid #eee',
                     paddingTop: '15px'
                 }}>
+                    <button
+                        onClick={handleToggleFavorite}
+                        style={{
+                            padding: '10px 20px',
+                            backgroundColor: isInFavorites ? '#ff6b6b' : '#e9ecef',
+                            color: isInFavorites ? 'white' : '#495057',
+                            border: isInFavorites ? 'none' : '2px solid #ff6b6b',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px'
+                        }}
+                        onMouseOver={(e) => {
+                            if (isInFavorites) {
+                                e.target.style.backgroundColor = '#ff5252';
+                            } else {
+                                e.target.style.backgroundColor = '#ff6b6b';
+                                e.target.style.color = 'white';
+                            }
+                        }}
+                        onMouseOut={(e) => {
+                            if (isInFavorites) {
+                                e.target.style.backgroundColor = '#ff6b6b';
+                            } else {
+                                e.target.style.backgroundColor = '#e9ecef';
+                                e.target.style.color = '#495057';
+                            }
+                        }}
+                    >
+                        {isInFavorites ? '❤️ Remove from Favorites' : '🤍 Add to Favorites'}
+                    </button>
+
                     <button
                         onClick={() => setIsEditing(!isEditing)}
                         style={{

@@ -2,14 +2,29 @@ import { Link } from 'react-router-dom';
 import useRecipeStore from './recipeStore';
 
 const RecipeList = () => {
-    const { recipes, filteredRecipes, searchTerm } = useRecipeStore(state => ({
+    const { recipes, filteredRecipes, searchTerm, favorites, addFavorite, removeFavorite } = useRecipeStore(state => ({
         recipes: state.recipes,
         filteredRecipes: state.filteredRecipes,
-        searchTerm: state.searchTerm
+        searchTerm: state.searchTerm,
+        favorites: state.favorites,
+        addFavorite: state.addFavorite,
+        removeFavorite: state.removeFavorite
     }));
 
     // Use filtered recipes if there's a search term, otherwise show all recipes
     const displayRecipes = searchTerm ? filteredRecipes : recipes;
+
+    const isInFavorites = (recipeId) => {
+        return favorites.includes(recipeId);
+    };
+
+    const handleToggleFavorite = (recipeId) => {
+        if (isInFavorites(recipeId)) {
+            removeFavorite(recipeId);
+        } else {
+            addFavorite(recipeId);
+        }
+    };
 
     return (
         <div>
@@ -68,31 +83,79 @@ const RecipeList = () => {
                         margin: '10px 0',
                         padding: '15px',
                         borderRadius: '5px',
-                        backgroundColor: '#f9f9f9'
+                        backgroundColor: '#f9f9f9',
+                        position: 'relative'
                     }}>
-                        <h3 style={{ color: '#333', marginBottom: '10px' }}>{recipe.title}</h3>
+                        {/* Favorite indicator */}
+                        {isInFavorites(recipe.id) && (
+                            <div style={{
+                                position: 'absolute',
+                                top: '10px',
+                                right: '10px',
+                                color: '#ff6b6b',
+                                fontSize: '20px'
+                            }}>
+                                ❤️
+                            </div>
+                        )}
+
+                        <h3 style={{ color: '#333', marginBottom: '10px', paddingRight: '40px' }}>
+                            {recipe.title}
+                        </h3>
                         <p style={{ color: '#666', lineHeight: '1.5', marginBottom: '15px' }}>
                             {recipe.description.length > 100
                                 ? `${recipe.description.substring(0, 100)}...`
                                 : recipe.description}
                         </p>
-                        <Link
-                            to={`/recipe/${recipe.id}`}
-                            style={{
-                                display: 'inline-block',
-                                padding: '8px 16px',
-                                backgroundColor: '#007bff',
-                                color: 'white',
-                                textDecoration: 'none',
-                                borderRadius: '4px',
-                                fontSize: '14px',
-                                transition: 'background-color 0.3s ease'
-                            }}
-                            onMouseOver={(e) => e.target.style.backgroundColor = '#0056b3'}
-                            onMouseOut={(e) => e.target.style.backgroundColor = '#007bff'}
-                        >
-                            View Details
-                        </Link>
+
+                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <Link
+                                to={`/recipe/${recipe.id}`}
+                                style={{
+                                    display: 'inline-block',
+                                    padding: '8px 16px',
+                                    backgroundColor: '#007bff',
+                                    color: 'white',
+                                    textDecoration: 'none',
+                                    borderRadius: '4px',
+                                    fontSize: '14px',
+                                    transition: 'background-color 0.3s ease'
+                                }}
+                                onMouseOver={(e) => e.target.style.backgroundColor = '#0056b3'}
+                                onMouseOut={(e) => e.target.style.backgroundColor = '#007bff'}
+                            >
+                                View Details
+                            </Link>
+
+                            <button
+                                onClick={() => handleToggleFavorite(recipe.id)}
+                                style={{
+                                    padding: '8px 12px',
+                                    backgroundColor: isInFavorites(recipe.id) ? '#ff6b6b' : 'transparent',
+                                    color: isInFavorites(recipe.id) ? 'white' : '#ff6b6b',
+                                    border: '2px solid #ff6b6b',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    fontSize: '12px',
+                                    fontWeight: 'bold',
+                                    transition: 'all 0.2s ease'
+                                }}
+                                onMouseOver={(e) => {
+                                    if (!isInFavorites(recipe.id)) {
+                                        e.target.style.backgroundColor = '#ff6b6b';
+                                        e.target.style.color = 'white';
+                                    }
+                                }}
+                                onMouseOut={(e) => {
+                                    if (!isInFavorites(recipe.id)) {
+                                        e.target.style.backgroundColor = 'transparent';
+                                        e.target.style.color = '#ff6b6b';
+                                    }
+                                }}
+                            >
+                                {isInFavorites(recipe.id) ? '❤️ Favorited' : '🤍 Add to Favorites'}
+                            </button>
+                        </div>
                     </div>
                 ))
             )}
