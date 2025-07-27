@@ -1,8 +1,23 @@
+import { useState } from 'react';
 import './App.css'
 import RecipeList from './components/RecipeList'
 import AddRecipeForm from './components/AddRecipeForm'
+import RecipeDetails from './components/RecipeDetails'
 
 function App() {
+  const [currentView, setCurrentView] = useState('list');
+  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
+
+  const handleRecipeClick = (recipeId) => {
+    setSelectedRecipeId(recipeId);
+    setCurrentView('details');
+  };
+
+  const handleBackToList = () => {
+    setCurrentView('list');
+    setSelectedRecipeId(null);
+  };
+
   return (
     <div style={{
       maxWidth: '800px',
@@ -33,8 +48,19 @@ function App() {
       </header>
 
       <main>
-        <AddRecipeForm />
-        <RecipeList />
+        {currentView === 'list' && (
+          <>
+            <AddRecipeForm />
+            <RecipeList onRecipeClick={handleRecipeClick} />
+          </>
+        )}
+
+        {currentView === 'details' && (
+          <RecipeDetails
+            recipeId={selectedRecipeId}
+            onBack={handleBackToList}
+          />
+        )}
       </main>
     </div>
   )

@@ -1,6 +1,6 @@
 import useRecipeStore from './recipeStore';
 
-const RecipeList = () => {
+const RecipeList = ({ onRecipeClick }) => {
     const recipes = useRecipeStore(state => state.recipes);
 
     return (
@@ -18,7 +18,27 @@ const RecipeList = () => {
                         backgroundColor: '#f9f9f9'
                     }}>
                         <h3 style={{ color: '#333', marginBottom: '10px' }}>{recipe.title}</h3>
-                        <p style={{ color: '#666', lineHeight: '1.5' }}>{recipe.description}</p>
+                        <p style={{ color: '#666', lineHeight: '1.5', marginBottom: '15px' }}>
+                            {recipe.description.length > 100
+                                ? `${recipe.description.substring(0, 100)}...`
+                                : recipe.description}
+                        </p>
+                        <button
+                            onClick={() => onRecipeClick(recipe.id)}
+                            style={{
+                                padding: '8px 16px',
+                                backgroundColor: '#007bff',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                fontSize: '14px'
+                            }}
+                            onMouseOver={(e) => e.target.style.backgroundColor = '#0056b3'}
+                            onMouseOut={(e) => e.target.style.backgroundColor = '#007bff'}
+                        >
+                            View Details
+                        </button>
                     </div>
                 ))
             )}
