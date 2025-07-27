@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useRecipeStore from './recipeStore';
 
 const RecipeList = () => {
@@ -7,11 +7,6 @@ const RecipeList = () => {
         filteredRecipes: state.filteredRecipes,
         searchTerm: state.searchTerm
     }));
-    const navigate = useNavigate();
-
-    const handleRecipeClick = (recipeId) => {
-        navigate(`/recipe/${recipeId}`);
-    };
 
     // Use filtered recipes if there's a search term, otherwise show all recipes
     const displayRecipes = searchTerm ? filteredRecipes : recipes;
@@ -81,22 +76,23 @@ const RecipeList = () => {
                                 ? `${recipe.description.substring(0, 100)}...`
                                 : recipe.description}
                         </p>
-                        <button
-                            onClick={() => handleRecipeClick(recipe.id)}
+                        <Link
+                            to={`/recipe/${recipe.id}`}
                             style={{
+                                display: 'inline-block',
                                 padding: '8px 16px',
                                 backgroundColor: '#007bff',
                                 color: 'white',
-                                border: 'none',
+                                textDecoration: 'none',
                                 borderRadius: '4px',
-                                cursor: 'pointer',
-                                fontSize: '14px'
+                                fontSize: '14px',
+                                transition: 'background-color 0.3s ease'
                             }}
                             onMouseOver={(e) => e.target.style.backgroundColor = '#0056b3'}
                             onMouseOut={(e) => e.target.style.backgroundColor = '#007bff'}
                         >
                             View Details
-                        </button>
+                        </Link>
                     </div>
                 ))
             )}
