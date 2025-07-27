@@ -2,20 +2,72 @@ import { useNavigate } from 'react-router-dom';
 import useRecipeStore from './recipeStore';
 
 const RecipeList = () => {
-    const recipes = useRecipeStore(state => state.recipes);
+    const { recipes, filteredRecipes, searchTerm } = useRecipeStore(state => ({
+        recipes: state.recipes,
+        filteredRecipes: state.filteredRecipes,
+        searchTerm: state.searchTerm
+    }));
     const navigate = useNavigate();
 
     const handleRecipeClick = (recipeId) => {
         navigate(`/recipe/${recipeId}`);
     };
 
+    // Use filtered recipes if there's a search term, otherwise show all recipes
+    const displayRecipes = searchTerm ? filteredRecipes : recipes;
+
     return (
         <div>
-            <h2>Recipe List</h2>
-            {recipes.length === 0 ? (
-                <p>No recipes yet. Add your first recipe!</p>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '20px'
+            }}>
+                <h2 style={{ margin: 0 }}>
+                    {searchTerm ? `Search Results (${displayRecipes.length})` : 'Recipe List'}
+                </h2>
+                {searchTerm && displayRecipes.length > 0 && (
+                    <span style={{
+                        fontSize: '14px',
+                        color: '#28a745',
+                        fontWeight: 'bold'
+                    }}>
+                        Found {displayRecipes.length} recipe{displayRecipes.length !== 1 ? 's' : ''}
+                    </span>
+                )}
+            </div>
+
+            {displayRecipes.length === 0 ? (
+                <div style={{
+                    textAlign: 'center',
+                    padding: '40px 20px',
+                    backgroundColor: '#f8f9fa',
+                    borderRadius: '8px',
+                    border: '1px solid #e9ecef'
+                }}>
+                    {searchTerm ? (
+                        <>
+                            <p style={{ color: '#6c757d', fontSize: '18px', margin: '0 0 10px 0' }}>
+                                🔍 No recipes found for "{searchTerm}"
+                            </p>
+                            <p style={{ color: '#6c757d', fontSize: '14px', margin: 0 }}>
+                                Try a different search term or add a new recipe!
+                            </p>
+                        </>
+                    ) : (
+                        <>
+                            <p style={{ color: '#6c757d', fontSize: '18px', margin: '0 0 10px 0' }}>
+                                📝 No recipes yet!
+                            </p>
+                            <p style={{ color: '#6c757d', fontSize: '14px', margin: 0 }}>
+                                Add your first recipe to get started.
+                            </p>
+                        </>
+                    )}
+                </div>
             ) : (
-                recipes.map(recipe => (
+                displayRecipes.map(recipe => (
                     <div key={recipe.id} style={{
                         border: '1px solid #ddd',
                         margin: '10px 0',
