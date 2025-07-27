@@ -1,7 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import useRecipeStore from './recipeStore';
 
-const RecipeList = ({ onRecipeClick }) => {
+const RecipeList = () => {
     const recipes = useRecipeStore(state => state.recipes);
+    const navigate = useNavigate();
+
+    const handleRecipeClick = (recipeId) => {
+        navigate(`/recipe/${recipeId}`);
+    };
 
     return (
         <div>
@@ -24,7 +30,7 @@ const RecipeList = ({ onRecipeClick }) => {
                                 : recipe.description}
                         </p>
                         <button
-                            onClick={() => onRecipeClick(recipe.id)}
+                            onClick={() => handleRecipeClick(recipe.id)}
                             style={{
                                 padding: '8px 16px',
                                 backgroundColor: '#007bff',

@@ -1,20 +1,29 @@
 import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import useRecipeStore from './recipeStore';
 import EditRecipeForm from './EditRecipeForm';
 import DeleteRecipeButton from './DeleteRecipeButton';
 
-const RecipeDetails = ({ recipeId, onBack }) => {
+const RecipeDetails = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const recipeId = parseInt(id);
+
     const recipe = useRecipeStore(state =>
         state.recipes.find(recipe => recipe.id === recipeId)
     );
     const [isEditing, setIsEditing] = useState(false);
+
+    const handleBackToList = () => {
+        navigate('/');
+    };
 
     if (!recipe) {
         return (
             <div style={{ padding: '20px', textAlign: 'center' }}>
                 <h2>Recipe not found</h2>
                 <button
-                    onClick={onBack}
+                    onClick={handleBackToList}
                     style={{
                         padding: '10px 20px',
                         backgroundColor: '#007bff',
@@ -38,7 +47,7 @@ const RecipeDetails = ({ recipeId, onBack }) => {
             fontFamily: 'Arial, sans-serif'
         }}>
             <button
-                onClick={onBack}
+                onClick={handleBackToList}
                 style={{
                     padding: '8px 16px',
                     backgroundColor: '#007bff',
