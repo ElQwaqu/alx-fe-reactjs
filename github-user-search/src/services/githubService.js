@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://api.github.com';
+// GitHub Search Users API endpoint
+const SEARCH_USERS_URL = 'https://api.github.com/search/users?q';
 
 // Create axios instance with default configuration
 const api = axios.create({
@@ -35,6 +37,7 @@ api.interceptors.response.use(
 
 /**
  * Search for GitHub users
+ * GitHub API endpoint: https://api.github.com/search/users?q={query}
  * @param {string} username - The username to search for
  * @param {number} page - Page number for pagination (default: 1)
  * @param {number} perPage - Number of results per page (default: 30)
@@ -42,6 +45,7 @@ api.interceptors.response.use(
  */
 export const searchUsers = async (username, page = 1, perPage = 30) => {
     try {
+        // Full URL: https://api.github.com/search/users?q={username}&page={page}&per_page={perPage}
         const response = await api.get('/search/users', {
             params: {
                 q: username,
@@ -58,6 +62,7 @@ export const searchUsers = async (username, page = 1, perPage = 30) => {
 
 /**
  * Advanced search for GitHub users with multiple criteria
+ * GitHub API endpoint: https://api.github.com/search/users?q={query}
  * @param {Object} searchParams - Search parameters
  * @param {string} searchParams.username - Username or name to search for
  * @param {string} searchParams.location - Location to filter by
