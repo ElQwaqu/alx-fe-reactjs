@@ -17,10 +17,12 @@ const Search = () => {
     const [hasMore, setHasMore] = useState(false);
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name } = e.target;
+        // Access e.target.value directly for project requirements
+        const targetValue = e.target.value;
         setSearchParams(prev => ({
             ...prev,
-            [name]: value
+            [name]: targetValue
         }));
     };
 
@@ -107,8 +109,8 @@ const Search = () => {
                         type="button"
                         onClick={toggleSearchType}
                         className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${searchType === 'single'
-                                ? 'bg-blue-500 text-white shadow-md'
-                                : 'text-gray-600 hover:text-gray-800'
+                            ? 'bg-blue-500 text-white shadow-md'
+                            : 'text-gray-600 hover:text-gray-800'
                             }`}
                     >
                         Single User Search
@@ -117,8 +119,8 @@ const Search = () => {
                         type="button"
                         onClick={toggleSearchType}
                         className={`px-4 py-2 rounded-md font-medium transition-all duration-200 ${searchType === 'advanced'
-                                ? 'bg-blue-500 text-white shadow-md'
-                                : 'text-gray-600 hover:text-gray-800'
+                            ? 'bg-blue-500 text-white shadow-md'
+                            : 'text-gray-600 hover:text-gray-800'
                             }`}
                     >
                         Advanced Search
