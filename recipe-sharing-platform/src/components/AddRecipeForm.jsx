@@ -13,12 +13,12 @@ const AddRecipeForm = () => {
 
     // Handle input changes
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: value
+            [name]: e.target.value
         }));
-        
+
         // Clear error when user starts typing
         if (errors[name]) {
             setErrors(prev => ({
@@ -45,7 +45,7 @@ const AddRecipeForm = () => {
             const ingredientsList = formData.ingredients
                 .split('\n')
                 .filter(ingredient => ingredient.trim() !== '');
-            
+
             if (ingredientsList.length < 2) {
                 newErrors.ingredients = 'Please include at least 2 ingredients (one per line)';
             }
@@ -63,7 +63,7 @@ const AddRecipeForm = () => {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             return;
         }
@@ -73,7 +73,7 @@ const AddRecipeForm = () => {
         // Simulate form submission (since we don't have a backend)
         setTimeout(() => {
             alert('Recipe submitted successfully!');
-            
+
             // Reset form
             setFormData({
                 title: '',
@@ -89,21 +89,21 @@ const AddRecipeForm = () => {
             <div className="max-w-2xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <Link 
+                    <Link
                         to="/"
                         className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mb-4 transition-colors duration-200"
                     >
-                        <svg 
-                            className="w-5 h-5 mr-2" 
-                            fill="none" 
-                            stroke="currentColor" 
+                        <svg
+                            className="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
                             viewBox="0 0 24 24"
                         >
-                            <path 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                strokeWidth={2} 
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18" 
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18"
                             />
                         </svg>
                         Back to Homepage
@@ -121,8 +121,8 @@ const AddRecipeForm = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Recipe Title */}
                         <div>
-                            <label 
-                                htmlFor="title" 
+                            <label
+                                htmlFor="title"
                                 className="block text-sm font-medium text-gray-700 mb-2"
                             >
                                 Recipe Title *
@@ -133,11 +133,10 @@ const AddRecipeForm = () => {
                                 name="title"
                                 value={formData.title}
                                 onChange={handleInputChange}
-                                className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                                    errors.title 
-                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
+                                className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.title
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
                                         : 'border-gray-300'
-                                }`}
+                                    }`}
                                 placeholder="Enter a descriptive title for your recipe"
                             />
                             {errors.title && (
@@ -147,8 +146,8 @@ const AddRecipeForm = () => {
 
                         {/* Ingredients */}
                         <div>
-                            <label 
-                                htmlFor="ingredients" 
+                            <label
+                                htmlFor="ingredients"
                                 className="block text-sm font-medium text-gray-700 mb-2"
                             >
                                 Ingredients *
@@ -159,11 +158,10 @@ const AddRecipeForm = () => {
                                 value={formData.ingredients}
                                 onChange={handleInputChange}
                                 rows={6}
-                                className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical ${
-                                    errors.ingredients 
-                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
+                                className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical ${errors.ingredients
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
                                         : 'border-gray-300'
-                                }`}
+                                    }`}
                                 placeholder="List each ingredient on a new line, e.g:&#10;2 cups flour&#10;1 tsp salt&#10;3 eggs"
                             />
                             {errors.ingredients && (
@@ -176,8 +174,8 @@ const AddRecipeForm = () => {
 
                         {/* Preparation Steps */}
                         <div>
-                            <label 
-                                htmlFor="steps" 
+                            <label
+                                htmlFor="steps"
                                 className="block text-sm font-medium text-gray-700 mb-2"
                             >
                                 Preparation Steps *
@@ -188,11 +186,10 @@ const AddRecipeForm = () => {
                                 value={formData.steps}
                                 onChange={handleInputChange}
                                 rows={8}
-                                className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical ${
-                                    errors.steps 
-                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
+                                className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical ${errors.steps
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
                                         : 'border-gray-300'
-                                }`}
+                                    }`}
                                 placeholder="Describe the cooking process step by step:&#10;1. Preheat oven to 350°F&#10;2. Mix dry ingredients in a bowl&#10;3. Add wet ingredients and stir until combined&#10;4. Bake for 25-30 minutes"
                             />
                             {errors.steps && (
@@ -208,31 +205,30 @@ const AddRecipeForm = () => {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className={`w-full sm:w-auto px-8 py-3 bg-blue-600 text-white font-medium rounded-md shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                                    isSubmitting 
-                                        ? 'opacity-50 cursor-not-allowed' 
+                                className={`w-full sm:w-auto px-8 py-3 bg-blue-600 text-white font-medium rounded-md shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${isSubmitting
+                                        ? 'opacity-50 cursor-not-allowed'
                                         : 'hover:bg-blue-700'
-                                }`}
+                                    }`}
                             >
                                 {isSubmitting ? (
                                     <span className="flex items-center justify-center">
-                                        <svg 
-                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" 
-                                            xmlns="http://www.w3.org/2000/svg" 
-                                            fill="none" 
+                                        <svg
+                                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
                                             viewBox="0 0 24 24"
                                         >
-                                            <circle 
-                                                className="opacity-25" 
-                                                cx="12" 
-                                                cy="12" 
-                                                r="10" 
-                                                stroke="currentColor" 
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
                                                 strokeWidth="4"
                                             />
-                                            <path 
-                                                className="opacity-75" 
-                                                fill="currentColor" 
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
                                                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                             />
                                         </svg>

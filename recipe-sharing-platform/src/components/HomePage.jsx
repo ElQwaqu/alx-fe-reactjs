@@ -23,23 +23,23 @@ const HomePage = () => {
                             Discover and share amazing recipes from around the world.
                             From quick weeknight dinners to special occasion treats.
                         </p>
-                        
+
                         {/* Add Recipe Button */}
-                        <Link 
+                        <Link
                             to="/add-recipe"
                             className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200"
                         >
-                            <svg 
-                                className="w-5 h-5 mr-2" 
-                                fill="none" 
-                                stroke="currentColor" 
+                            <svg
+                                className="w-5 h-5 mr-2"
+                                fill="none"
+                                stroke="currentColor"
                                 viewBox="0 0 24 24"
                             >
-                                <path 
-                                    strokeLinecap="round" 
-                                    strokeLinejoin="round" 
-                                    strokeWidth={2} 
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6" 
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                                 />
                             </svg>
                             Add New Recipe
