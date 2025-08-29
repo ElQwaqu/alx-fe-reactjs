@@ -15,5 +15,11 @@ export default {
         'src/**/*.{js,jsx}',
         '!src/main.jsx',
         '!src/setupTests.js'
-    ]
+    ],
+    extensionsToTreatAsEsm: ['.jsx'],
+    globals: {
+        'ts-jest': {
+            useESM: true
+        }
+    }
 };
