@@ -46,15 +46,19 @@ const RegistrationForm = () => {
             newErrors.username = 'Username must be at least 3 characters long';
         }
 
-        // Email validation
-        if (!email.trim()) {
+        // Email validation - basic check first
+        if (!email) {
+            newErrors.email = 'Email is required';
+        } else if (!email.trim()) {
             newErrors.email = 'Email is required';
         } else if (!/\S+@\S+\.\S+/.test(email)) {
             newErrors.email = 'Email address is invalid';
         }
 
-        // Password validation
-        if (!password.trim()) {
+        // Password validation - basic check first
+        if (!password) {
+            newErrors.password = 'Password is required';
+        } else if (!password.trim()) {
             newErrors.password = 'Password is required';
         } else if (password.length < 6) {
             newErrors.password = 'Password must be at least 6 characters long';
