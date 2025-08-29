@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import Navigation from './components/Navigation'
+import PostsComponent from './components/PostsComponent'
 import './App.css'
 
 const queryClient = new QueryClient();
@@ -8,7 +8,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Navigation />
+      <PostsComponent />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
