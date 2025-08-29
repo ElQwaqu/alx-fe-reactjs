@@ -1,4 +1,4 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, Routes, Route } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 const Profile = () => {
