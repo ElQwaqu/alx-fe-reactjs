@@ -1,12 +1,10 @@
 import { useState } from 'react';
 
 const RegistrationForm = () => {
-    // State management for form fields
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: ''
-    });
+    // Individual state management for form fields
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     // State for form errors
     const [errors, setErrors] = useState({});
@@ -18,10 +16,15 @@ const RegistrationForm = () => {
     // Handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
+
+        // Update the appropriate state based on field name
+        if (name === 'username') {
+            setUsername(value);
+        } else if (name === 'email') {
+            setEmail(value);
+        } else if (name === 'password') {
+            setPassword(value);
+        }
 
         // Clear error when user starts typing
         if (errors[name]) {
@@ -37,23 +40,23 @@ const RegistrationForm = () => {
         const newErrors = {};
 
         // Username validation
-        if (!formData.username.trim()) {
+        if (!username.trim()) {
             newErrors.username = 'Username is required';
-        } else if (formData.username.length < 3) {
+        } else if (username.length < 3) {
             newErrors.username = 'Username must be at least 3 characters long';
         }
 
         // Email validation
-        if (!formData.email.trim()) {
+        if (!email.trim()) {
             newErrors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
             newErrors.email = 'Email address is invalid';
         }
 
         // Password validation
-        if (!formData.password.trim()) {
+        if (!password.trim()) {
             newErrors.password = 'Password is required';
-        } else if (formData.password.length < 6) {
+        } else if (password.length < 6) {
             newErrors.password = 'Password must be at least 6 characters long';
         }
 
@@ -85,8 +88,8 @@ const RegistrationForm = () => {
                                 message: 'User registered successfully!',
                                 user: {
                                     id: Date.now(),
-                                    username: formData.username,
-                                    email: formData.email
+                                    username: username,
+                                    email: email
                                 }
                             });
                         } else {
@@ -102,11 +105,9 @@ const RegistrationForm = () => {
             if (response.success) {
                 setSubmitMessage(`Success: ${response.message}`);
                 // Reset form on successful submission
-                setFormData({
-                    username: '',
-                    email: '',
-                    password: ''
-                });
+                setUsername('');
+                setEmail('');
+                setPassword('');
             }
         } catch (error) {
             setSubmitMessage(`Error: ${error.message}`);
@@ -131,7 +132,7 @@ const RegistrationForm = () => {
                             type="text"
                             id="username"
                             name="username"
-                            value={formData.username}
+                            value={username}
                             onChange={handleChange}
                             className={errors.username ? 'error' : ''}
                             placeholder="Enter your username"
@@ -148,7 +149,7 @@ const RegistrationForm = () => {
                             type="email"
                             id="email"
                             name="email"
-                            value={formData.email}
+                            value={email}
                             onChange={handleChange}
                             className={errors.email ? 'error' : ''}
                             placeholder="Enter your email address"
@@ -165,7 +166,7 @@ const RegistrationForm = () => {
                             type="password"
                             id="password"
                             name="password"
-                            value={formData.password}
+                            value={password}
                             onChange={handleChange}
                             className={errors.password ? 'error' : ''}
                             placeholder="Enter your password"
@@ -195,7 +196,7 @@ const RegistrationForm = () => {
                 {/* Form State Debug Info (for development) */}
                 <div className="debug-info">
                     <h4>Current Form Data:</h4>
-                    <pre>{JSON.stringify(formData, null, 2)}</pre>
+                    <pre>{JSON.stringify({ username, email, password }, null, 2)}</pre>
                 </div>
             </div>
         </div>
